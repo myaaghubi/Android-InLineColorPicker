@@ -1,6 +1,12 @@
 # Android-InLineColorPicker
 A simple inline color picker for android.
 
+
+## Shot
+
+![Alt text](/screenshot/shot1.jpg?raw=true "InLineColorPicker")
+
+
 ## Usage
 
 As widget
@@ -37,7 +43,3 @@ As java
 
     System.out.println("----------: "+inLineColorPicker.getSelectedColorHex());
 ```
-
-## Shot
-
-![Alt text](/screenshot/shot1.jpg?raw=true "InLineColorPicker")
