@@ -3,7 +3,7 @@ A simple inline color picker for android.
 
 ## Usage
 
-
+As widget
 ```
     <com.myaghobi.inlinecolorpicker.InLineColorPicker
         android:id="@+id/inline"
@@ -18,3 +18,26 @@ A simple inline color picker for android.
         app:space="3dp"
         />
 ```
+
+As java
+```
+    InLineColorPicker inLineColorPicker = (InLineColorPicker) findViewById(R.id.inline);
+
+    inLineColorPicker.setColors(new int[]{Color.RED, Color.GREEN});
+    inLineColorPicker.setOnColorChangeListener(new InLineColorPicker.OnColorChangeListener() {
+      @Override
+      public void onColorChange(int color, String hex) {
+        System.out.println("color: "+color+" - hex string: "+hex);
+      }
+    });
+
+    inLineColorPicker.setSpace(20);
+    inLineColorPicker.setBorderWidth(10);
+    inLineColorPicker.setRadius(60);
+
+    System.out.println("----------: "+inLineColorPicker.getSelectedColorHex());
+```
+
+## Shot
+
+![Alt text](/screenshot/shot1.jpg?raw=true "InLineColorPicker")
