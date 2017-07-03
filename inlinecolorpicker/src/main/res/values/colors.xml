@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="defaultBorderColor">#f99</color>
+
+    <color name="colorCustom1">#FF00FF</color>
+    <color name="colorCustom2">#007FFF</color>
+    <color name="colorCustom3">#FF9900</color>
+    <color name="colorCustom4">#3b5100</color>
+    <color name="colorCustom5">#baff00</color>
+
+    <array name="defaultPaletteColor">
+        <item>@color/colorCustom1</item>
+        <item>@color/colorCustom2</item>
+        <item>@color/colorCustom3</item>
+        <item>@color/colorCustom4</item>
+        <item>@color/colorCustom5</item>
+    </array>
+</resources>

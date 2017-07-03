@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InLineColorPicker">
+        <attr name="alignment" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="colors" format="reference" />
+        <attr name="radius" format="dimension" />
+        <attr name="space" format="dimension" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="defaultSelectedColor" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="defaultRadius">23dp</dimen>
+    <dimen name="defaultSpaces">5dp</dimen>
+    <dimen name="defaultBorderWidth">2dp</dimen>
+</resources>
