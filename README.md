@@ -3,7 +3,6 @@ A simple inline color picker for android.
 
 ## Usage
 
-For more details, see [example](https://github.com/xdtianyu/ColorPicker/tree/master/example)
 
 ```
     <com.myaghobi.inlinecolorpicker.InLineColorPicker
