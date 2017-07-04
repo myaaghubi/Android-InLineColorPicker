@@ -38,6 +38,10 @@ public class InLineColorPicker extends LinearLayout {
 	private OnColorChangeListener onColorChange=null;
 
 
+	public InLineColorPicker(Context context){
+		this(context, null);
+	}
+
 	public InLineColorPicker(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
@@ -273,10 +277,16 @@ public class InLineColorPicker extends LinearLayout {
 
 
 	public int getSelectedColorInt() {
-		return colors[defaultSelectedIndex];
+		if (defaultSelectedIndex!=-1)
+			return colors[defaultSelectedIndex];
+		else
+			return defaultSelectedIndex;
 	}
 	public String getSelectedColorHex() {
-		return Integer.toHexString(colors[defaultSelectedIndex]);
+		if (defaultSelectedIndex!=-1)
+			return Integer.toHexString(colors[defaultSelectedIndex]);
+		else
+			return "";
 	}
 
 	public int[] getColors() {

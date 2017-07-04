@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
-
+repositories {
+    maven {
+        url  "http://jcenter.bintray.com"
+    }
+}
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
