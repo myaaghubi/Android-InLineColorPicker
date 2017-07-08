@@ -1,8 +1,8 @@
-# Android-InLineColorPicker
+# Android-InLineColorPicker 1.1
 A simple inline color picker for android.
 
 
-## Shot
+## ScreenShot
 
 ![Alt text](/screenshot/shot1.jpg?raw=true "InLineColorPicker")
 
@@ -21,7 +21,7 @@ As widget
         app:borderColor="#ff0000"
         app:borderWidth="5dp"
         app:radius="22dp"
-        app:space="3dp"
+        app:space="5dp"
         />
 ```
 
@@ -38,8 +38,9 @@ As java
     });
 
     inLineColorPicker.setSpace(20);
-    inLineColorPicker.setBorderWidth(10);
-    inLineColorPicker.setRadius(60);
+    inLineColorPicker.setBorderWidth(5); // setting borderWidth will cause to show selected color by border
+    inLineColorPicker.setBorderColor(Color.RED); // for default the library will use of selected item color
+    inLineColorPicker.setRadius(40);
 
     System.out.println("----------: "+inLineColorPicker.getSelectedColorHex());
 ```
