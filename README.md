@@ -9,7 +9,8 @@ A simple inline color picker for android.
 
 ## Usage
 
-As widget
+For Android Studio, just add "inlinecolorpicker" folder into your project as gradle project
+ Widget
 ```
     <com.myaghobi.inlinecolorpicker.InLineColorPicker
         android:id="@+id/inline"
@@ -25,7 +26,7 @@ As widget
         />
 ```
 
-As java
+Java
 ```
     InLineColorPicker inLineColorPicker = (InLineColorPicker) findViewById(R.id.inline);
 
