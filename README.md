@@ -10,6 +10,7 @@ A simple inline color picker for android.
 ## Usage
 
 For Android Studio, just add "inlinecolorpicker" folder into your project as gradle project
+
  Widget
 ```
     <com.myaghobi.inlinecolorpicker.InLineColorPicker
