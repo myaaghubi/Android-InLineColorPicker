@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class InLineColorPicker extends LinearLayout {
+public class InLineColorPicker extends View {
 
 	private int alignmentLeft = 0;
 	private int alignmentCenter = 1;
@@ -54,7 +54,8 @@ public class InLineColorPicker extends LinearLayout {
 			alignment = a.getInteger(R.styleable.InLineColorPicker_alignment, alignmentCenter);
 			radius = a.getDimension(R.styleable.InLineColorPicker_radius, context.getResources().getDimension(R.dimen.defaultRadius));
 			space = a.getDimension(R.styleable.InLineColorPicker_space, context.getResources().getDimension(R.dimen.defaultSpaces));
-			border = a.getDimension(R.styleable.InLineColorPicker_borderWidth, context.getResources().getDimension(R.dimen.defaultBorderWidth));
+			border = a.getDimension(R.styleable.InLineColorPicker_borderWidth, 0);
+			borderColor=a.getColor(R.styleable.InLineColorPicker_borderColor, -1);
 
 			int colorRef = 0;
 			if ((colorRef = a.getResourceId(R.styleable.InLineColorPicker_colors, -1))>0) {
@@ -63,11 +64,10 @@ public class InLineColorPicker extends LinearLayout {
 				colors = context.getResources().getIntArray(R.array.defaultPaletteColor);
 			}
 
-			borderColor=a.getColor(R.styleable.InLineColorPicker_borderColor, -1);
 
 			int sColor_ = -1;
 			if ((sColor_=a.getInteger(R.styleable.InLineColorPicker_defaultSelectedColor, -1)) != -1)
-				setdefaultSelectedIndex(colors[sColor_]);
+				setDefaultColorByIndex(colors[sColor_]);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,28 +88,35 @@ public class InLineColorPicker extends LinearLayout {
 			x = radius;
 			offset = border;
 		} else if (alignment == alignmentCenter)  {
-			temp = colors.length*(radius*2+space+border)-space;
-			x = (canvas.getWidth()-temp)/2+radius;
+			temp = colors.length*(radius*2+space+border)-space-border;
+			x = (canvas.getWidth()-temp)/2+radius+border;
 			offset = border*-1;
 		} else if (alignment == alignmentRight) {
 			offset = border*-1;
-			temp = colors.length*(radius*2+space+border)-space;
+			temp = colors.length*(radius*2+space+border)-space-border;
 			x = (canvas.getWidth()-temp)+radius;
 		}
 
 		for (int i = 0; i < colors.length; i++) {
-			if (isSelected && i == defaultSelectedIndex) {
-				if (borderColor!=-1)
-					paint.setColor(borderColor);
-				else
+			if (border!=0 && isSelected && i == defaultSelectedIndex) {
+				if (borderColor==-1)
 					paint.setColor(colors[i]);
+				else
+					paint.setColor(borderColor);
 				canvas.drawCircle(x+offset, radius+border, radius+border, paint);
 			}
+
 			paint.setColor(colors[i]);
 			canvas.drawCircle(x+offset, radius+border, radius, paint);
+
+			if (border==0 && isSelected && i == defaultSelectedIndex) {
+				paint.setColor(Color.parseColor("#77ffffff"));
+				canvas.drawCircle(x+offset, radius+border, radius, paint);
+				paint.setColor(colors[i]);
+				canvas.drawCircle(x+offset, radius+border, radius/2, paint);
+			}
 			x+=space+radius*2+border;
 		}
-
 
 	}
 
@@ -130,10 +137,10 @@ public class InLineColorPicker extends LinearLayout {
 				actionDown = true;
 				break;
 			case MotionEvent.ACTION_MOVE:
-				setdefaultSelectedIndex(findColorIndex(motionEvent.getX()));
+				setDefaultColorByIndex(findColorByX(motionEvent.getX()));
 				break;
 			case MotionEvent.ACTION_UP:
-				setdefaultSelectedIndex(findColorIndex(motionEvent.getX()));
+				setDefaultColorByIndex(findColorByX(motionEvent.getX()));
 				if (actionDown) {
 					super.performClick();
 					actionDown=false;
@@ -147,42 +154,48 @@ public class InLineColorPicker extends LinearLayout {
 		return true;
 	}
 
-	private int findColorIndex(float x) {
+	private int findColorByX(float x) {
 		float offset = 0;
 		float temp = 0;
 		float x_ = 0;
 		float x2_ = 0;
 
+
 		if (alignment == alignmentLeft) {
-			x_ = radius;
-			offset = border;
+			offset = 0;
 		} else if (alignment == alignmentCenter) {
-			temp = colors.length*(radius*2+space+border)-space;
-			x_ = (layoutWidth-temp)/2+radius;
-			offset = border*-1;
+			temp = colors.length*(radius*2+space+border)-space+border;
+			offset = (layoutWidth-temp)/2;
 		} else if (alignment == alignmentRight) {
-			offset = border*-1;
-			temp = colors.length*(radius*2+space+border)-space;
-			x_ = (layoutWidth-temp)+radius;
+			temp = colors.length*(radius*2+space+border)-space+border;
+			offset = (layoutWidth-temp);
 		}
 
-		x2_ = x_+2*radius+border+space;
+		x2_ = x_+2*radius+border+space/2;
 
 		for (int i = 0; i < colors.length; i++) {
-			if (x_ <= x && x2_ >= x) {
+			if (i==0) {
+				x_ = offset+border;
+				x2_=x_+radius*2+space/2;
+			} else {
+				x_=x2_;
+				x2_=x_+radius*2+space+border;
+			}
+
+
+			if (x2_ >= x) {
 				return i;
 			}
-			x_+=radius*2;
-			x2_=x_+2*radius;
-		}
 
+			x2_+=border;
+		}
 
 		return -1;
 	}
 
 	@Override
 	protected void onMeasure(int widthMeasure, int heightMeasure) {
-		float desiredWidth = colors.length*(2*radius+border+space)-space;
+		float desiredWidth = colors.length*(2*radius+border+space)+border-space;
 		float desiredHeight = 2*(radius+border);
 
 		int widthMode = MeasureSpec.getMode(widthMeasure);
@@ -242,12 +255,23 @@ public class InLineColorPicker extends LinearLayout {
 	}
 
 
-	public void setdefaultSelectedIndex(int index) {
+	public void setDefaultColorByIndex(int index) {
 		if (index>=0 && index<colors.length) {
 			defaultSelectedIndex=index;
 			isSelected = true;
-			onColorChange(colors[index]);
 			invalidate();
+			onColorChange(colors[index]);
+		}
+	}
+
+	public void setDefaultColor(int color) {
+		for (int i=0; i<colors.length; i++) {
+			if (colors[i]==color) {
+				defaultSelectedIndex=i;
+				isSelected = true;
+				invalidate();
+				break;
+			}
 		}
 	}
 
