@@ -4,7 +4,7 @@ A simple inline color picker for android.
 
 ## ScreenShot
 
-![Alt text](/screenshot/shot1.jpg?raw=true "InLineColorPicker")
+![Alt text](screenshot/shot1.jpg?raw=true "ScreenShot InLineColorPicker")
 
 
 ## Usage
